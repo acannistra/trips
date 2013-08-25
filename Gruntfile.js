@@ -26,10 +26,6 @@ module.exports = function(grunt) {
         files: 'Gruntfile.js',
         tasks: ['jshint:gruntfile']
       },
-      js: {
-        files: 'public/js/*.js',
-        tasks: ['jshint', 'uglify']
-      },
       sass: {
         files: ['public/css/sass/*.scss'],
         tasks: ['sass']

@@ -1,0 +1,25 @@
+html, body{
+	margin: 0px;
+	padding: 0px;
+}
+
+.map{
+	width: 50%;
+	height: 100%;
+	position: absolute;
+	right: 0px;	
+}
+
+.content{
+	position: absolute;
+	width: 50%;
+	height: 100%;
+	left: 0px;
+}
+
+.ask-text{
+	text-align: center;
+	padding-top: 20px;
+	font-size: 75px;
+	font-family: 'Quattrocento', serif;
+}

@@ -1,4 +1,5 @@
 
+
 exports.index = function(req, res){
-	res.send("index hid");
+	res.render('index');
 }
