@@ -41,17 +41,20 @@ var ref_colors = ['#A6B170', '#7FA292',
                  '#A9A18C', '#BDD09F'];
 
 var tripBox = '<div class="pure-u-1-4" style="opacity: 0;" >' + 
-                '<div class="box" id="{{title}}_box" style="background-color: {{color}}">'+
+                '<div class="box {{category}}_color" id="{{id}}_box">'+
                   '<div class="box-content">'+
                     '<div class="title">'+
                       '{{title}}'+
                     '</div>'+
+                    '<img class="type_ico" src="img/ico/{{category}}.png"></img>'+
                     '<div class="date">'+
                       '{{date}}'+
                     '</div>'+
                   '</div>'+
                 '</div>'+
               '</div>';
+
+var trip_markers = [];
 
 google.maps.event.addDomListener(window, 'load', map_init);
 $(document).ready(function(){
@@ -76,8 +79,9 @@ function loadTrips(trips){
     var tripData = 
       {
         'title': trips[i].destination,
+        'id'   : trips[i].leaderUsername+"-"+trips[i].departDate,
         'date' : trips[i].departDate,
-        'color': typeColors[trips[i].category.toLowerCase()]
+        'category': trips[i].category.toLowerCase()
       };
     var new_tripBox = $(Mustache.to_html(tripBox, tripData));
     $("#trips_grid").prepend(new_tripBox);
@@ -87,6 +91,7 @@ function loadTrips(trips){
         ++v.number;
       }
     })
+    mapify(new_tripBox, category);
   };
   $("#no_trips").animate({'opacity': 1}, 'slow');
 }
@@ -121,18 +126,47 @@ function map_init() {
 }
 
 
-function codeAddress(address) {
+function addMarker(string, type, accurate_callback) {
+  var bounds_ll = new google.maps.LatLng(40.797177,-75.06958);
+  var bounds_ur = new google.maps.LatLng(46.815099,-68.334961);
+  var bounds    = new google.maps.LatLngBounds(bounds_ll, bounds_ur);
+
 	var geocoder = new google.maps.Geocoder();
-    geocoder.geocode( { 'address': address}, function(results, status) {
+    geocoder.geocode( { 'address': string, 'bounds' : bounds},
+     function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
-        map.setCenter(results[0].geometry.location);
+        var marker_tmp = new google.maps.Marker({
+          position: results[0].geometry.location,
+          map: map,
+          title: string,
+          icon: 'img/ico/'+type+'.png',
+          ibOptions: "here are some options"
+        });
+        accurate_callback(results[0].geometry.location_type);
+        trip_markers.push(marker_tmp);
+        google.maps.event.addListener(marker_tmp, "click", function(e){
+          alert(this.position.toString());
+        })
       } else {
         alert("Geocode was not successful for the following reason: " + status);
       }
     });
   }
 
+function mapify(tripBox, type){
 
+  var geo_string = tripBox.find(".title").html();
+
+  console.log(geo_string);  
+  var inaccurate = function(accuracy_type){
+    if(accuracy_type === google.maps.GeocoderLocationType.APPROXIMATE){
+      tripBox.find(".box-content").append("<div class='location'>location approximate.</div>");
+    }
+  };
+  addMarker(geo_string, type, inaccurate);
+
+
+}
 
 function updateBreakdown(types){
   var numItems = types.reduce(function(sum, curr){
@@ -140,7 +174,13 @@ function updateBreakdown(types){
   }, 0);
   for (var i = types.length - 1; i >= 0; i--) {
     var width = (types[i].number/numItems) * 100;
-    $("#"+types[i].name+"_bar").animate({"width" : width+"%"}, 'slow');
+    if (width === 0){
+      $("#"+types[i].name+"_bar").hide('slow');
+    }
+    else{
+      $("#"+types[i].name+"_bar .bar-elem-title").append(" ("+types[i].number+")");
+      $("#"+types[i].name+"_bar").animate({"width" : width+"%"}, 'slow');
+    };
     console.log(width);
 
   };
@@ -154,7 +194,7 @@ function initBreakdown(types){
     typeColors[type.name] =  type.color;
     typeCounts[type.name] = 0
     var title = $(document.createElement('div')).addClass("bar-elem-title").html(type.name);
-    var elem = $(document.createElement('div')).addClass("bar-elem").attr('id', type.name+"_bar").css({'width': ((1/numItems)*100)+'%', 'background-color': type.color}).append(title)
+    var elem = $(document.createElement('div')).addClass("bar-elem").attr('id', type.name+"_bar").css({'width': ((1/numItems)*100)+'%'}).addClass(type.name+"_color").append(title)
     breakdown.append(elem);
     console.log(elem);
   };
