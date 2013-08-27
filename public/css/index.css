@@ -1,4 +1,5 @@
 html, body{
+	display: table;
 	height: 100%;
 	margin: 0px;
 	padding: 0px;
@@ -16,14 +17,14 @@ html, body{
 .content{
 	position: absolute;
 	width: 50% !important;
-	height: 70%;
+	height: 100%;
 	left: 0px;
-	top: 100px;
-	overflow-y: auto;
+	overflow-y: hidden;
 	overflow-x: hidden;
 }
 
 .head-text{
+	display: table-row;
 	position: absolute;
 	width: 50%;
 	top: 0;
@@ -40,16 +41,17 @@ html, body{
 	font-variant: small-caps;
 }
 
-.boxes-container { 
-    position: absolute;
+.bar+ .boxes-container { 
+	position: absolute;
     left:0;
-    top:;
+
+    top: 100px;
+    bottom: 0;
     /*-webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;*/
-    width: 100%;
     overflow-x: hidden;
-    overflow-y: hidden;
+    overflow-y: scroll;
 
 }
 .scrolls { 
@@ -71,10 +73,11 @@ html, body{
 }
 
 .bar{
+	display: table-row;
 	position: absolute;
 	top: 50px;
 	height: 50px;
-	width: 50%;
+	width: 100%;
 
 }
 
@@ -96,3 +99,18 @@ html, body{
 	padding: 20px;
 }
 
+
+.stats{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: 18%;
+	background: blue;
+}
+
+.stats span{
+	padding-top: 40px;
+	padding-bottom: 40px;
+	text-align: center;
+	font-size: 50px;
+}

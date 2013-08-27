@@ -7,6 +7,7 @@
 var express = require('express'),
     http = require('http'),
     routes = require('./routes'),
+    api = require('./routes/api')
     path = require('path');
 //  Configure DUST
 var dust = require('consolidate').dust;
@@ -27,6 +28,8 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 
 app.get('/', routes.index);
+app.get('/api/trips/upcoming', api.upcomingTrips);
+app.get('/api/trips/all', api.allTrips);
 
 //  Create the server, start listening
 var server = http.createServer(app).listen(app.get('port'), function(){
