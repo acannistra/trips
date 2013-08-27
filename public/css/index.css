@@ -7,8 +7,40 @@ html, body{
 	font-family: 'Lusitana', serif;
 }
 
+blockquote {
+border-left:2px solid black;
+margin:1.5em 10px;
+padding:.5em 10px;
+quotes:"\201C""\201D""\2018""\2019";
+}
+blockquote:before {
+color:black;
+content:open-quote;
+font-size:4em;
+line-height:.1em;
+margin-right:.25em;
+vertical-align:-.4em;
+}
+blockquote p {
+display:inline;
+}
+
+.header{
+	position: absolute;
+	top: 0;
+	width: 50% !important;	
+	right: 0;
+	left: 0;
+
+}
+.pull-right{
+	position: absolute;
+	right: 0;
+
+}
+
 .map{
-	width: 50%;
+	width: 49.9%;
 	height: 100%;
 	position: absolute;
 	right: 0px;	
@@ -26,13 +58,11 @@ html, body{
 .head-text{
 	display: table-row;
 	position: absolute;
-	width: 50%;
 	top: 0;
 	left: 0;
 	height: 50px;
 	text-align: left;
 	padding-left: 10px;
-	margin-right: -10px;
 	font-size: 40px;
 	font-family: 'Lusitana', serif;
 }
@@ -59,17 +89,32 @@ html, body{
     height: 255px;
     white-space: nowrap;
 } 
+
+
 .box { 
+	min-height: 250px;
     /*box-shadow: 1px 1px 10px #999; */
-    margin: 2px;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-top: 2px;
     cursor: pointer;
 	display:inline-block;
 	padding: 0;
 	*display:inline;
 	*zoom:1;
 	vertical-align:top;
-
+	width: 99%;
 	background-color: #BDD5AF;
+	max-height: 250px;
+	position: relative;
+}
+
+.bigtext{
+	vertical-align: middle;
+	font-size: 30px;
+	padding: 20px;
+	font-style: italic;
+
 }
 
 .bar{
@@ -96,7 +141,35 @@ html, body{
 }
 
 .box-content{
-	padding: 20px;
+	word-break: normal;
+	height: 200px	;
+	padding: 10%;
+	position: relative;
+}
+
+.title{
+
+	font-weight: bold;
+	/*font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; */
+	font-size: 20px	;
+}
+
+.date{
+	margin-top: 10px;
+	font-family: 'Courier', sans-serif;
+}
+
+.leader{
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	content: "HIHIHI";
+}
+
+.leader-info{
+	word-break: break-all;
+	display: inline-block;
+	padding-left: 5px;
 }
 
 
@@ -114,3 +187,5 @@ html, body{
 	text-align: center;
 	font-size: 50px;
 }
+
+
