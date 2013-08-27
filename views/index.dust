@@ -24,48 +24,49 @@
             <div class="bar" id="breakdown"></div>   
 		<div class="content">
 			
-            <div class="boxes-container">
-                <div class="box">
-                    <div class="box-content">
-                    Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.
+            <div class="pure-g-r">
+                <div class="pure-u-1-4">
+                    <div class="box">
+                        <div class="box-content">
+                        Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.
+                        </div>
                     </div>
                 </div>
-                <div class="box">
-                    <div class="box-content">
-
-                    Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.
+                <div class="pure-u-1-4">
+                    <div class="box">
+                        <div class="box-content">
+                        Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.
+                        </div>
                     </div>
                 </div>
-                <div class="box">
-                    <div class="box-content">
-
-                    Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.
+                <div class="pure-u-1-4">
+                    <div class="box">
+                        <div class="box-content">
+                        Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.
+                        </div>
                     </div>
                 </div>
-                <div class="box">
-                    <div class="box-content">
-
-                    Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.
+                <div class="pure-u-1-4">
+                    <div class="box">
+                        <div class="box-content">
+                        Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.
+                        </div>
                     </div>
                 </div>
-                <div class="box">
-                    <div class="box-content">
-
-                    Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.
+                <div class="pure-u-1-4">
+                    <div class="box">
+                        <div class="box-content">
+                        Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.
+                        </div>
+                    </div>
+                </div><div class="pure-u-1-4">
+                    <div class="box">
+                        <div class="box-content">
+                        Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.
+                        </div>
                     </div>
                 </div>
-                <div class="box">
-                    <div class="box-content">
-
-                    Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.
-                    </div>
-                </div>
-                <div class="box">
-                    <div class="box-content">
-
-                    Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.Here's some content.
-                    </div>
-                </div>
+                
 
                 <!-- <div class="scrolls">
                     <div class="box">

@@ -2,7 +2,27 @@
 /* client javascript */
 
 var typeColors = {};
-var types      = {};
+var types      = [{ 
+                    name:  'hiking',
+                    color: '#BDD09F', 
+                    number: 0
+                  },
+                  {
+                    name:  'climbing',
+                    color: '#778899',
+                    number: 0
+                  },
+                  {
+                    name:  'general',
+                    color: '#FF6347',
+                    number: 0
+                  },
+                  {
+                    name: 'aqua',
+                    color: '#87CEEB',
+                    number: 0
+                  }];
+
 var trips_ref  = {};
 var ref_colors = ['#A6B170', '#7FA292',
                  '#98A148', '#FA9A50',
@@ -14,16 +34,12 @@ $(document).ready(function(){
   var tripsURL = "http://www.tuftsmountainclub.org/api/trips.php?action=list";
   $.getJSON(tripsURL, function(data){
     trips_ref = data;
-
-
-    types = $.unique(data.map(function(a){return a.category.toLowerCase()}));
     page_init();
    });
 
 });
 
 function page_init(){
-  assignColors(types);
   initBreakdown(types);
 }
 
@@ -86,8 +102,8 @@ function initBreakdown(types){
   var numItems = types.length;
   var breakdown = $("#breakdown")
   for (var i = 0; i < numItems; i++) {
-    var title = $(document.createElement('div')).addClass("bar-elem-title").html(types[i]);
-    var elem = $(document.createElement('div')).addClass("bar-elem").css({'width': ((1/numItems)*100)+'%', 'background-color': typeColors[types[i]]}).append(title)
+    var title = $(document.createElement('div')).addClass("bar-elem-title").html(types[i].name);
+    var elem = $(document.createElement('div')).addClass("bar-elem").css({'width': ((1/numItems)*100)+'%', 'background-color': types[i].color}).append(title)
     breakdown.append(elem);
     console.log(elem);
   };
