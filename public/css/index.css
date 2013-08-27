@@ -1,6 +1,9 @@
 html, body{
+	height: 100%;
 	margin: 0px;
 	padding: 0px;
+	transition:all .2s linear; -o-transition:all .2s linear; -moz-transition:all .2s linear; -webkit-transition:all .2s linear;
+	font-family: 'Lusitana', serif;
 }
 
 .map{
@@ -12,14 +15,87 @@ html, body{
 
 .content{
 	position: absolute;
-	width: 50%;
-	height: 100%;
+	width: 50% !important;
+	height: 70%;
 	left: 0px;
+	top: 100px;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
-.ask-text{
-	text-align: center;
-	padding-top: 20px;
-	font-size: 75px;
-	font-family: 'Quattrocento', serif;
+.head-text{
+	position: absolute;
+	width: 50%;
+	top: 0;
+	left: 0;
+	height: 50px;
+	text-align: left;
+	padding-left: 10px;
+	margin-right: -10px;
+	font-size: 40px;
+	font-family: 'Lusitana', serif;
 }
+
+.sc {
+	font-variant: small-caps;
+}
+
+.boxes-container { 
+	margin-left: 30px;
+	margin-right: 30px;
+    position: absolute;
+    left:0;
+    top:;
+    /*-webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;*/
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+
+}
+.scrolls { 
+    
+    height: 255px;
+    white-space: nowrap;
+} 
+.box { 
+    /*box-shadow: 1px 1px 10px #999; */
+    margin: 2px;
+    cursor: pointer;
+	display:inline-block;
+	padding: 0;
+	*display:inline;
+	*zoom:1;
+	vertical-align:top;
+	width: 250px;
+	height: 250px;
+	background-color: #BDD5AF;
+}
+
+.bar{
+	position: absolute;
+	top: 50px;
+	height: 50px;
+	width: 50%;
+
+}
+
+.bar-elem{
+	height: 100%;
+	position: relative;
+	display: inline-block;
+	width: 25%;
+}
+
+.bar-elem-title{
+	text-align: center;
+	position: relative;
+	top: 15px;
+	font-size: 20px;
+}
+
+.box-content{
+	padding: 20px;
+}
+
