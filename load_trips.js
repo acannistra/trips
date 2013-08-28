@@ -1,7 +1,7 @@
 var redis = require('redis'),
 	request = require('request'),
 	redisClient = redis.createClient();
-
+	
 var tripsURL = 'http://www.tuftsmountainclub.org/api/trips.php?action=list&days=200';
 
 request(tripsURL, function(err, response, body){

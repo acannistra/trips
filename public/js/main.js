@@ -86,7 +86,7 @@ var trip_markers = [];
 
 google.maps.event.addDomListener(window, 'load', map_init);
 $(document).ready(function(){
-  var tripsURL = 'http://www.tuftsmountainclub.org/api/trips.php?action=list&days=200';//"/api/trips/upcoming";
+  var tripsURL = 'api/trips/all';
   $.getJSON(tripsURL, function(data){
     trips_ref = data;
     page_init();
@@ -102,7 +102,9 @@ function page_init(){
 }
 
 function loadTrips(trips){
+
   for (var i = trips.length - 1; i >= 0; i--) {
+    if(!trips[i]){continue;}
     var category = trips[i].category.toLowerCase()
     var tripData = 
       {
@@ -176,10 +178,10 @@ function mapify(tripBox, tripData){
   var id = tripBox.find(".box").attr('id').split('_', 1);
 
 
-  $.getJSON('api/trips/get?id='+id, function(d){
-    console.log($.extend(tripData, {latlng: JSON.parse(d.latlng)}))
-    addMarker($.extend(tripData, JSON.parse(d.latlng)));
-  });
+  // $.getJSON('api/trips/get?id='+id, function(d){
+  //   console.log($.extend(tripData, {latlng: JSON.parse(d.latlng)}))
+  //   addMarker($.extend(tripData, JSON.parse(d.latlng)));
+  // });
 
 }
 
