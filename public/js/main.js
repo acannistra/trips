@@ -86,7 +86,7 @@ var trip_markers = [];
 
 google.maps.event.addDomListener(window, 'load', map_init);
 $(document).ready(function(){
-  var tripsURL = 'http://www.tuftsmountainclub.org/api/trips.php?action=list&days=0';//"/api/trips/upcoming";
+  var tripsURL = 'http://www.tuftsmountainclub.org/api/trips.php?action=list&days=200';//"/api/trips/upcoming";
   $.getJSON(tripsURL, function(data){
     trips_ref = data;
     page_init();
@@ -107,7 +107,8 @@ function loadTrips(trips){
     var tripData = 
       {
         'title': trips[i].destination,
-        'id'   : trips[i].leaderUsername+"-"+trips[i].departDate,
+        'destination' : trips[i].destination,
+        'id'   : trips[i].leaderUsername+"-"+trips[i].departDate.split(" ", 1),
         'date' : trips[i].departDate,
         'category': trips[i].category.toLowerCase()
       };
@@ -119,6 +120,7 @@ function loadTrips(trips){
         ++v.number;
       }
     })
+    // $.post('api/trips/add', tripData, function(d) {if(d != "OK"){console.log('post err');}});
     mapify(new_tripBox, tripData);
   };
   $("#no_trips").animate({'opacity': 1}, 'slow');
@@ -154,47 +156,30 @@ function map_init() {
 }
 
 
-function addMarker(tripdata, accurate_callback) {
-  var bounds_ll = new google.maps.LatLng(40.797177,-75.06958);
-  var bounds_ur = new google.maps.LatLng(46.815099,-68.334961);
-  var bounds    = new google.maps.LatLngBounds(bounds_ll, bounds_ur);
-
-	var geocoder = new google.maps.Geocoder();
-    geocoder.geocode( { 'address': tripdata.title, 'bounds' : bounds},
-     function(results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-        infoBox_rendered = Mustache.to_html(infoBox_template, tripdata)
-
-        var marker_tmp = new google.maps.Marker({
-          position: results[0].geometry.location,
-          map: map,
-          title: tripdata.title,
-          icon: 'img/ico/'+tripdata.category+'.png',
-          infobox: new InfoBox($.extend(infoBox_options, {content: infoBox_rendered}))
-        });
-        accurate_callback(results[0].geometry.location_type);
-        trip_markers.push(marker_tmp);
-        google.maps.event.addListener(marker_tmp, "click", function(e){
-          this.infobox.open(map, this);
-        })
-      } else {
-        alert("Geocode was not successful for the following reason: " + status);
-      }
-    });
-  }
+function addMarker(tripdata) {
+  console.log(tripdata);
+  infoBox_rendered = Mustache.to_html(infoBox_template, tripdata)
+  lat = parseFloat(tripdata.latlng.location.lat);
+  lng = parseFloat(tripdata.latlng.location.lng);
+  console.log(google.maps.LatLng(lat, lng));
+  var marker_tmp = new google.maps.Marker({
+    position: new google.maps.LatLng(lat, lng),
+    map: map,
+    title: tripdata.title,
+    icon: 'img/ico/'+tripdata.category+'.png',
+    infobox: new InfoBox($.extend(infoBox_options, {content: infoBox_rendered}))
+  });
+}
 
 function mapify(tripBox, tripData){
 
-  var geo_string = tripBox.find(".title").html();
+  var id = tripBox.find(".box").attr('id').split('_', 1);
 
-  console.log(geo_string);  
-  var inaccurate = function(accuracy_type){
-    if(accuracy_type === google.maps.GeocoderLocationType.APPROXIMATE){
-      tripBox.find(".box-content").append("<div class='location'>location approximate.</div>");
-    }
-  };
-  addMarker(tripData, inaccurate);
 
+  $.getJSON('api/trips/get?id='+id, function(d){
+    console.log($.extend(tripData, {latlng: JSON.parse(d.latlng)}))
+    addMarker($.extend(tripData, JSON.parse(d.latlng)));
+  });
 
 }
 

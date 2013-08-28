@@ -30,6 +30,8 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.get('/', routes.index);
 app.get('/api/trips/upcoming', api.upcomingTrips);
 app.get('/api/trips/all', api.allTrips);
+app.post('/api/trips/add', api.pushTrip);
+app.get('/api/trips/get', api.getTrip);
 
 //  Create the server, start listening
 var server = http.createServer(app).listen(app.get('port'), function(){
