@@ -2,9 +2,9 @@
 /* client javascript */
 
 
-var bounds_ll = google.maps.LatLng(40.797177,-75.06958);
-var bounds_ur = google.maps.LatLng(46.815099,-68.334961);
-var geocodeBounds = google.maps.LatLngBounds(bounds_ll, bounds_ur);
+var bounds_ll = new google.maps.LatLng(40.797177,-75.06958);
+var bounds_ur = new google.maps.LatLng(46.815099,-68.334961);
+var geocodeBounds    = new google.maps.LatLngBounds(bounds_ll, bounds_ur);
 var geocoder = new google.maps.Geocoder();
 
 var typeColors = {};
@@ -48,6 +48,9 @@ var tripBox = '<div class="pure-u-1-4" >' +
                     '</div>'+
                     '<div class="date">'+
                       '{{leader}}'+
+                    '</div>'+
+                    '<div class="date">'+
+                      'Experience: {{level}}'+
                     '</div>'+
                   '</div>'+
                 '</div>'+
@@ -127,7 +130,8 @@ function loadTrips(trips){
         'returnDate' : new Date(trips[i].returnDate).toDateString(),
         'category': trips[i].category.toLowerCase(),
         'gear': trips[i].gear,
-        'leaderEmail' : trips[i].leaderEmail
+        'leaderEmail' : trips[i].leaderEmail,
+        'level' : trips[i].level
       };
     var new_tripBox = $(Mustache.to_html(tripBox, tripData))
     new_tripBox.find('.box').data('data', tripData);
@@ -159,8 +163,11 @@ function tripClick (){
   $('.info-dates').html(tripData.departDate + " - " + tripData.returnDate)
   $('.info-leader').html('<a href="mailto:'+tripData.leaderEmail+'">'+tripData.leader+'</a>');
   $('.info-description').html(tripData.description);
-  $('.info-gear').html("You'll Need: "+tripData.gear)
-  addMarker(tripData);
+  $('.info-gear').html("<u>You'll Need</u>: "+tripData.gear)
+  $('.info-exp').html("<u>Experience</u>: "+tripData.level)
+  if(!$(this).find('.box').data('marker')){
+    addMarker(tripData);
+  }
 
 }
 
@@ -200,14 +207,20 @@ function addMarker(tripdata) {
   address = tripdata.title;
   geocoder.geocode( { 'address': address, 'bounds': geocodeBounds}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
+        $(".icon-location-warning").hide();
         var marker_tmp = new google.maps.Marker({
           position: results[0].geometry.location,
           map: map,
           title: tripdata.title,
           icon: 'img/ico/'+tripdata.category+'.png',
-        });
+          dom: tripdata.id
+        })
+        $("#"+tripdata.id+"_box").data('marker', true)
+        $("#"+tripdata.id+"_box").data('position', results[0].geometry.location)
+        google.maps.event.addListener(marker_tmp, 'click', function(){ tripClick.call($("#"+this.dom+"_box").parent())});
+        
     } else {
-      cons("Geocode was not successful for the following reason: " + status);
+      $('.icon-location-warning').show();
     }
   });
 

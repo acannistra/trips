@@ -91,17 +91,22 @@ display:inline;
 
 .icon-location-warning{
 	position: absolute;
-	top: 10px;
-	right: 10px;
+	bottom: 10px;
+	right: 15px;
 	font-size: 20px;
 
 }
 
 .info-gear{
+	display: inline-block;
 	font-size: 13px;
-	text-align: justify;
 
 }
+
+.info-exp{
+	display: inline-block;
+}
+
 
 .info-dates{
 	width: 100%;

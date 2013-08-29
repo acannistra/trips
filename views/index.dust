@@ -22,7 +22,7 @@
             <div class="map" id="map_big">map</div>
             <div class="big-info">
                 <div class="info-content">
-                    <i class="icon-warning-sign icon-location-warning"></i>
+                    <i title="no location available." class="icon-warning-sign icon-location-warning hidden"></i>
                     <div class="info-title">
                     Blue Hills Reservation
 
@@ -38,13 +38,29 @@
 
 
                     <blockquote class="info-description">
-                        This is a very lengthy description about this trip which should be pretty cool! YAYAYAYAYAYAYAYY
+                        This is a very lengthy description about this trip which should be pretty cool! 
                     </blockquote>
 
-                    <div class='info-gear'>
-                       You'll Need: shoes, socks, boots, other things, backpack, lunch
+                    <div class="pure-g-r" style="width: 70%; margin: 0 auto">
+                        <div class="pure-u-1-6">
+                        <i class="icon-exclamation-sign icon-2x"></i>
+                        </div>
+                        <div class="pure-u-5-6">
+                            <div class='info-gear'>
+                               You'll Need: shoes, socks, boots, other things, backpack, lunch
 
-                    </div>
+                            </div>
+                        </div>
+                        <div class="pure-u-1-6">
+                        <i class="icon-exclamation-sign icon-2x"></i>
+                        </div>
+                        <div class="pure-u-5-6">
+                            <div class='info-exp'>
+                               Experience: none
+
+                            </div>
+                        </div>
+                    </div> 
 
                     <!-- <a class="pure-button pure-button-primary info-button" style="bottom: 60px"href="#">e-mail: tony.cannistra@gmail.com</a>
                     <a class="pure-button pure-button-primary info-button" href="#">call: 401-79300916</a> -->
