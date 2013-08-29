@@ -16,3 +16,4 @@ I awoke the morning of August 24, 2013 with a strong desire to make a cool inter
 * [forecast.io](http://developer.forecast.io)'s superb API
 * [Google Maps API v3](https://developers.google.com/maps/documentation/javascript/)
 * [rschlaikjer's](https://github.com/rschlaikjer) great work on the TMC trips API.
+* The sweet [Skycons.js](https://github.com/darkskyapp/skycons) weather icons package
