@@ -2,14 +2,10 @@
 /* client javascript */
 
 
-var weekday=new Array(7);
-weekday[0]="Sunday";
-weekday[1]="Monday";
-weekday[2]="Tuesday";
-weekday[3]="Wednesday";
-weekday[4]="Thursday";
-weekday[5]="Friday";
-weekday[6]="Saturday";
+var bounds_ll = google.maps.LatLng(40.797177,-75.06958);
+var bounds_ur = google.maps.LatLng(46.815099,-68.334961);
+var geocodeBounds = google.maps.LatLngBounds(bounds_ll, bounds_ur);
+var geocoder = new google.maps.Geocoder();
 
 var typeColors = {};
 var typeCounts = {};  
@@ -125,12 +121,17 @@ function loadTrips(trips){
         'title': trips[i].destination,
         'leader': trips[i].leaderName,
         'destination' : trips[i].destination,
+        'description' : trips[i].description,
         'id'   : (trips[i].leaderUsername+"-"+trips[i].departDate.split(" ", 1)).replace(".", "_"),
         'departDate' : new Date(trips[i].departDate).toDateString(),
         'returnDate' : new Date(trips[i].returnDate).toDateString(),
-        'category': trips[i].category.toLowerCase()
+        'category': trips[i].category.toLowerCase(),
+        'gear': trips[i].gear,
+        'leaderEmail' : trips[i].leaderEmail
       };
-    var new_tripBox = $(Mustache.to_html(tripBox, tripData));
+    var new_tripBox = $(Mustache.to_html(tripBox, tripData))
+    new_tripBox.find('.box').data('data', tripData);
+    new_tripBox.on('click', tripClick);
     // if (tripData.date < new Date()){
     //   new_tripBox.css({opacity: 0.5, cursor: 'default'})
     // }
@@ -148,6 +149,21 @@ function loadTrips(trips){
   };
   $("#trips_grid").append($('<div/>').html(leadTrip).contents());
 }
+
+function tripClick (){
+  tripData = $(this).find('.box').data('data');
+  borderColor = $(this).find('.box').css('background-color')
+
+  $(".info-content").css({border: '10px solid '+borderColor});
+  $('.info-title').html(tripData.title);
+  $('.info-dates').html(tripData.departDate + " - " + tripData.returnDate)
+  $('.info-leader').html('<a href="mailto:'+tripData.leaderEmail+'">'+tripData.leader+'</a>');
+  $('.info-description').html(tripData.description);
+  $('.info-gear').html("You'll Need: "+tripData.gear)
+  addMarker(tripData);
+
+}
+
 
 function randomColor(colors){
   return 'rgb(' + (Math.floor((200)*Math.random()) + 90) + ',' + 
@@ -181,17 +197,22 @@ function map_init() {
 
 function addMarker(tripdata) {
   console.log(tripdata);
-  infoBox_rendered = Mustache.to_html(infoBox_template, tripdata)
-  lat = parseFloat(tripdata.latlng.location.lat);
-  lng = parseFloat(tripdata.latlng.location.lng);
-  console.log(google.maps.LatLng(lat, lng));
-  var marker_tmp = new google.maps.Marker({
-    position: new google.maps.LatLng(lat, lng),
-    map: map,
-    title: tripdata.title,
-    icon: 'img/ico/'+tripdata.category+'.png',
-    infobox: new InfoBox($.extend(infoBox_options, {content: infoBox_rendered}))
+  address = tripdata.title;
+  geocoder.geocode( { 'address': address, 'bounds': geocodeBounds}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+        var marker_tmp = new google.maps.Marker({
+          position: results[0].geometry.location,
+          map: map,
+          title: tripdata.title,
+          icon: 'img/ico/'+tripdata.category+'.png',
+        });
+    } else {
+      cons("Geocode was not successful for the following reason: " + status);
+    }
   });
+
+
+  
 }
 
 function mapify(tripBox, tripData){

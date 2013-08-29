@@ -22,6 +22,7 @@
             <div class="map" id="map_big">map</div>
             <div class="big-info">
                 <div class="info-content">
+                    <i class="icon-warning-sign icon-location-warning"></i>
                     <div class="info-title">
                     Blue Hills Reservation
 
@@ -32,11 +33,11 @@
                     </div>
 
                     <div class="info-leader">
-                    Tony Cannistra
+                        <a href="">Tony Cannistra</a>
                     </div>
 
 
-                    <blockquote>
+                    <blockquote class="info-description">
                         This is a very lengthy description about this trip which should be pretty cool! YAYAYAYAYAYAYAYY
                     </blockquote>
 
@@ -45,8 +46,8 @@
 
                     </div>
 
-                    <a class="pure-button pure-button-primary info-button" style="bottom: 60px"href="#">e-mail: tony.cannistra@gmail.com</a>
-                    <a class="pure-button pure-button-primary info-button" href="#">call: 401-79300916</a>
+                    <!-- <a class="pure-button pure-button-primary info-button" style="bottom: 60px"href="#">e-mail: tony.cannistra@gmail.com</a>
+                    <a class="pure-button pure-button-primary info-button" href="#">call: 401-79300916</a> -->
 
 
                 </div>
