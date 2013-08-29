@@ -1,5 +1,6 @@
-<!DOCTYPE html>
-<html class>
+<!DOCTYPE HTML>
+
+<html lang = "en">
     <head>
     	<link href='http://fonts.googleapis.com/css?family=Shadows+Into+Light|Quattrocento|Lusitana' rel='stylesheet' type='text/css'>
 
@@ -22,10 +23,10 @@
             <div class="map" id="map_big">map</div>
             <div class="big-info">
                 <div class="info-content">
-                    <i title="no location available." class="icon-warning-sign icon-location-warning hidden"></i>
+                    <i title="no location available."class="icon-warning-sign icon-location-warning hidden"></i>
                     <div class="info-title">
                     Blue Hills Reservation
-
+                    
                     </div>
 
                     <div class="info-dates">
@@ -60,7 +61,11 @@
 
                             </div>
                         </div>
+
                     </div> 
+                    <div class="info-weather">
+                        <canvas id="weathericon" width="64" height="64"> </canvas>
+                    </div>
 
                     <!-- <a class="pure-button pure-button-primary info-button" style="bottom: 60px"href="#">e-mail: tony.cannistra@gmail.com</a>
                     <a class="pure-button pure-button-primary info-button" href="#">call: 401-79300916</a> -->
@@ -94,6 +99,7 @@
         <script src="js/infobox.js" type="text/javascript"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
+        <script src="js/skycons.js" type="text/javascript"></script>
 
         <script src="js/main.js"></script>
 
@@ -103,5 +109,6 @@
             g.src='//www.google-analytics.com/ga.js';
             s.parentNode.insertBefore(g,s)}(document,'script'));
         </script>
+
     </body>
 </html>

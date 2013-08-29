@@ -28,6 +28,7 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 
 app.get('/', routes.index);
+app.get('/api/weather/:lat/:lng/:at', api.weather)
 app.get('/api/trips/all', api.allTrips);
 app.post('/api/trips/add', api.pushTrip);
 app.get('/api/trips/get', api.getTrip);

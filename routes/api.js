@@ -2,9 +2,14 @@ var http    = require("http"),
 	request = require("request"),
 	redis = require('redis'),
 	redisClient = redis.createClient(),
+	Forecast = require('forecast.io'),
 	gm = require('googlemaps');
 
-
+var forecastOptions = 
+	{ 
+		APIKey: '7516bbf0f9e3cf4343c3744256fd183d',
+	};
+var forecast = new Forecast(forecastOptions);
 //init redis
 redisClient.on("error", function (err) {
 	console.log(err);
@@ -88,6 +93,20 @@ function geocode (location, callback){
 			ms = new Date().getTime();
 		}
 	}
+}
+
+exports.weather = function (req, res){
+	lat  = req.params.lat;
+	lng  = req.params.lng
+	time = req.params.at;
+
+	forecast.getAtTime(lat, lng, time, {exclude: 'currently,minutely,hourly'}, function(err, resp, data){
+		if(err) console.log(err);
+		res.json(data);
+	})
+
+
+
 }
 
 exports.getTrip = function(req, res){

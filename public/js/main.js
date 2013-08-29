@@ -6,6 +6,7 @@ var bounds_ll = new google.maps.LatLng(40.797177,-75.06958);
 var bounds_ur = new google.maps.LatLng(46.815099,-68.334961);
 var geocodeBounds    = new google.maps.LatLngBounds(bounds_ll, bounds_ur);
 var geocoder = new google.maps.Geocoder();
+var weatherpath = "api/weather/"
 
 var typeColors = {};
 var typeCounts = {};  
@@ -208,6 +209,9 @@ function addMarker(tripdata) {
   geocoder.geocode( { 'address': address, 'bounds': geocodeBounds}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
         $(".icon-location-warning").hide();
+        weather(results[0].geometry.location.lat(), results[0].geometry.location.lng(), Math.round(new Date(tripdata.departDate).getTime() / 1000) , function(d, e){
+          $("#"+tripdata.id+"_box").data('weather', d.daily.data[0]);
+        })
         var marker_tmp = new google.maps.Marker({
           position: results[0].geometry.location,
           map: map,
@@ -270,4 +274,9 @@ function initBreakdown(types){
     breakdown.append(elem);
     console.log(elem);
   };
+}
+
+function weather(lat, lng, time, callback){
+  alert(lat + '_' + lng);
+  $.getJSON(weatherpath+lat+'/'+lng+'/'+time, callback);
 }
