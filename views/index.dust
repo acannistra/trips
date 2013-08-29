@@ -18,81 +18,54 @@
 
     </head>
     <body>
-		<div class="map" id="map_big">map</div>
-        
+		<div class="info-container">
+            <div class="map" id="map_big">map</div>
+            <div class="big-info">
+                <div class="info-content">
+                    <div class="info-title">
+                    Blue Hills Reservation
+
+                    </div>
+
+                    <div class="info-dates">
+                    5/20/2013 to 5/21/2013
+                    </div>
+
+                    <div class="info-leader">
+                    Tony Cannistra
+                    </div>
+
+
+                    <blockquote>
+                        This is a very lengthy description about this trip which should be pretty cool! YAYAYAYAYAYAYAYY
+                    </blockquote>
+
+                    <div class='info-gear'>
+                       You'll Need: shoes, socks, boots, other things, backpack, lunch
+
+                    </div>
+
+                    <a class="pure-button pure-button-primary info-button" style="bottom: 60px"href="#">e-mail: tony.cannistra@gmail.com</a>
+                    <a class="pure-button pure-button-primary info-button" href="#">call: 401-79300916</a>
+
+
+                </div>
+
+            </div>
+        </div>
 		<div class="content">
-            <div class="header">
+            <!-- <div class="header">
                 <div class="head-text">
                     trips. 
                     <small>go outside.</small>
                 </div>
                 <div style="width: 40%"></div>
-            </div>
+            </div> -->
 
 
             <div class="bar" id="breakdown"></div>   
 			<div class="boxes-container" style="border: 10px black;">
                 <div class="pure-g" id="trips_grid">
-<!--                      <div class="pure-u-1-4" >
-                        <div class="box">
-                            <div class="box-content">
-                                <div class='title'>
-                                    Winnipesaukee River in Northfield, NH
-                                </div>
-                                <div class="date">
-                                8/27/13-9/1/13
-                                </div> -->
-                                <!-- <div class="pure-g-r leader">
-                                    <div class="pure-u-1-3">
-                                        <img src="http://placehold.it/50x50" style="width: 100%"/>
-                                    </div>  
-                                    <div class="pure-u-2-3">
-                                        <div class="leader-info">
-                                        <i>Nicholas Andre</i>
-
-                                        </div>
-                                        <div class="leader-info">
-                                        403.222.1245
-                                        </div>
-
-                                    </div>
-                                </div> -->
-                           <!--  </div>
-                        </div>
-                    </div>
-                    <div class="pure-u-1-4" >
-                        <div class="box">
-                            <div class="box-content">
-                                Another Hike
-                                <div class="leader">
-                                    <div class="pure-g-r">
-                                        <div class="pure-u-1-3">
-                                            <img src="http://placehold.it/50x50" style="width: 100%"/>
-                                        </div>  
-                                        <div class="pure-u-2-3">
-                                            <div class="leader-info">
-                                            <i>Nicholas Andre</i>
-
-                                            </div>
-                                            <div class="leader-info">
-                                            403.222.1245
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-                
-                    <div class="pure-u-1-4">
-                        <div class="box" id="no_trips" style="opacity:0; background-color: rgba(204, 216, 193, 0.54)">
-                            <div class="bigtext">
-                                No more trips. Lead one today!
-                            </div>
-
-                       </div>
-                    </div>
                 </div>
             </div>
             <img class="bottom-img" src="img/tmc.png"></div>

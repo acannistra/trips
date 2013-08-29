@@ -40,7 +40,7 @@ var ref_colors = ['#A6B170', '#7FA292',
                  '#FF7256', '#FF6347',
                  '#A9A18C', '#BDD09F'];
 
-var tripBox = '<div class="pure-u-1-4" style="opacity: 0;" >' + 
+var tripBox = '<div class="pure-u-1-4" >' + 
                 '<div class="box {{category}}_color" id="{{id}}_box">'+
                   '<div class="box-content">'+
                     '<div class="title">'+
@@ -48,11 +48,22 @@ var tripBox = '<div class="pure-u-1-4" style="opacity: 0;" >' +
                     '</div>'+
                     '<img class="type_ico" src="img/ico/{{category}}.png"></img>'+
                     '<div class="date">'+
-                      '{{date}}'+
+                      '{{departDate}}'+
+                    '</div>'+
+                    '<div class="date">'+
+                      '{{leader}}'+
                     '</div>'+
                   '</div>'+
                 '</div>'+
               '</div>';
+
+var leadTrip = '<div class="pure-u-1-4">'+
+                        '<div class="box" id="no_trips" style="background-color: rgba(204, 216, 193, 0.54)">'+
+                            '<div class="bigtext">'+
+                                'No more trips. Lead one today!'+
+                            '</div>'+
+                       '</div>'+
+                    '</div>';
 
 var infoBox_template = '<div class="infobox">' +
                         '<div class="ib-container">'+
@@ -67,6 +78,9 @@ var infoBox_template = '<div class="infobox">' +
                         '</div>'+
                     '</div>'+
                   '</div>';
+
+
+
 
 var infoBox_options = {
   disableAutoPan: false
@@ -86,9 +100,9 @@ var trip_markers = [];
 
 google.maps.event.addDomListener(window, 'load', map_init);
 $(document).ready(function(){
-  var tripsURL = 'api/trips/all';
+  var tripsURL = 'http://www.tuftsmountainclub.org/api/trips.php?action=list&days=180';
   $.getJSON(tripsURL, function(data){
-    trips_ref = data;
+    trips_ref = data.sort(function(a,b){ return (new Date(a.departDate)) >= (new Date(b.departDate))});
     page_init();
    });
 
@@ -109,14 +123,21 @@ function loadTrips(trips){
     var tripData = 
       {
         'title': trips[i].destination,
+        'leader': trips[i].leaderName,
         'destination' : trips[i].destination,
-        'id'   : trips[i].leaderUsername+"-"+trips[i].departDate.split(" ", 1),
-        'date' : trips[i].departDate,
+        'id'   : (trips[i].leaderUsername+"-"+trips[i].departDate.split(" ", 1)).replace(".", "_"),
+        'departDate' : new Date(trips[i].departDate).toDateString(),
+        'returnDate' : new Date(trips[i].returnDate).toDateString(),
         'category': trips[i].category.toLowerCase()
       };
     var new_tripBox = $(Mustache.to_html(tripBox, tripData));
-    $("#trips_grid").prepend(new_tripBox);
-    new_tripBox.animate({'opacity': 1}, 'slow');
+    // if (tripData.date < new Date()){
+    //   new_tripBox.css({opacity: 0.5, cursor: 'default'})
+    // }
+
+
+    $("#trips_grid").append(new_tripBox);
+    new_tripBox.show('slow');
     $.each(types, function(i,v){
       if(v.name === category){
         ++v.number;
@@ -125,7 +146,7 @@ function loadTrips(trips){
     // $.post('api/trips/add', tripData, function(d) {if(d != "OK"){console.log('post err');}});
     mapify(new_tripBox, tripData);
   };
-  $("#no_trips").animate({'opacity': 1}, 'slow');
+  $("#trips_grid").append($('<div/>').html(leadTrip).contents());
 }
 
 function randomColor(colors){

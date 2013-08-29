@@ -2,8 +2,7 @@ var http    = require("http"),
 	request = require("request"),
 	redis = require('redis'),
 	redisClient = redis.createClient(),
-	gm = require('googlemaps'),
-	events = require('events');
+	gm = require('googlemaps');
 
 
 //init redis
@@ -33,7 +32,7 @@ exports.allTrips = function(req, res){
 
 		var addToQuery = function (err, results) {
 			var query = results;
-			trips.push(query);
+			if(query){trips.push(query);}
 			next();
 		};
 
