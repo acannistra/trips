@@ -88,7 +88,14 @@ display:inline;
 	font-size: 125%;
 
 }
-
+.scroller{
+	position: absolute;
+	height: 40%;
+	right: 0;
+	left: 0;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
 .info-weather{
 	position: absolute;
 	bottom: 0;
@@ -99,7 +106,6 @@ display:inline;
 }
 
 .wx-summary{
-	top: 25px;
 	position: absolute;
 	display: inline-block;
 	margin-left: 5px;
@@ -111,6 +117,11 @@ display:inline;
 	right: 15px;
 	font-size: 20px;
 
+}
+
+.location-appx{
+	top: 20px;
+	right: 20px;
 }
 
 .info-gear{
@@ -128,7 +139,7 @@ display:inline;
 	width: 100%;
 	font-size: 20px;
 	text-align: center;
-	font-family: 'Courier', sans-serif;
+	font-family: 'Crimson Text', serif;
 }
 
 .map{
@@ -259,7 +270,7 @@ display:inline;
 
 .date{
 	margin-top: 10px;
-	font-family: 'Courier', sans-serif;
+	font-family: 'Courier New', sans-serif;
 }
 
 .leader{

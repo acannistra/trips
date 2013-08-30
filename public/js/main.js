@@ -22,6 +22,8 @@ var icons = {
 }
 
 
+
+
 var typeColors = {};
 var typeCounts = {};  
 var types      = [{ 
@@ -110,7 +112,7 @@ var infoBox_options = {
 };
 
 
-var trip_markers = [];
+var map_markers = [];
 
 google.maps.event.addDomListener(window, 'load', map_init);
 $(document).ready(function(){
@@ -184,6 +186,9 @@ function tripClick (){
   if(!$(this).find('.box').data('marker')){
     addMarker(tripData);
   }
+
+  
+
   
 
 }
@@ -216,10 +221,21 @@ function map_init() {
   google.maps.event.addDomListener(window, 'resize', function() {
       map.setCenter(center);
   });
+
+  google.maps.Map.prototype.clearOverlays = function() {
+  for (var i = 0; i < map_markers.length; i++ ) {
+    map_markers[i].setMap(null);
+  }
+}
+}
+
+function clearAllMarkers(){
+
 }
 
 
 function addMarker(tripdata) {
+  map.clearOverlays();
   console.log(tripdata);
   address = tripdata.title;
   geocoder.geocode( { 'address': address, 'bounds': geocodeBounds}, function(results, status) {
@@ -230,11 +246,11 @@ function addMarker(tripdata) {
 
             $("#"+tripdata.id+"_box").data('weather', d.daily.data[0]);
             wx = $("#"+tripdata.id+"_box").data('weather');
-            $('.info-weather').find('.wx-temps').html('high: '+wx.temperatureMax+ 'F, low: '+wx.temperatureMin+'F');
+            $('.info-weather').find('.wx-temps').html('high: '+wx.temperatureMax+ '&#176;F, low: '+wx.temperatureMin+'&#176;F');
             $('.info-weather').find('.wx-text').html(wx.summary);
-            alert(wx.icon)
             skycons.add('weathericon', icons[wx.icon]);
             skycons.play();
+            $('.info-weather').show();
           });
         }
         var marker_tmp = new google.maps.Marker({
@@ -242,14 +258,28 @@ function addMarker(tripdata) {
           map: map,
           title: tripdata.title,
           icon: 'img/ico/'+tripdata.category+'.png',
-          dom: tripdata.id
+          dom: tripdata.id,
+          center: results[0].geometry.location
         })
+
+        if(results[0].geometry.location.location_type === 'APPROXIMATE'){
+          $("#"+tripdata.id+"_box").data('approximate', true)
+          $
+        }
+        map_markers.push(marker_tmp);
+
+        map.setCenter(marker_tmp.getPosition());
+
         $("#"+tripdata.id+"_box").data('marker', true)
         $("#"+tripdata.id+"_box").data('position', results[0].geometry.location)
-        google.maps.event.addListener(marker_tmp, 'click', function(){ tripClick.call($("#"+this.dom+"_box").parent())});
+        google.maps.event.addListener(marker_tmp, 'click', function(){ 
+          map.setCenter(marker_tmp.getPosition());
+          tripClick.call($("#"+this.dom+"_box").parent())
+        });
         
     } else {
       $('.icon-location-warning').show();
+      $('.info-weather').hide();
     }
   });
 

@@ -2,7 +2,7 @@
 
 <html lang = "en">
     <head>
-    	<link href='http://fonts.googleapis.com/css?family=Shadows+Into+Light|Quattrocento|Lusitana' rel='stylesheet' type='text/css'>
+    	<link href='http://fonts.googleapis.com/css?family=Shadows+Into+Light|Quattrocento|Lusitana|Crimson+Text' rel='stylesheet' type='text/css'>
 
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -19,11 +19,12 @@
 
     </head>
     <body>
-		<div class="info-container">
+
+		<div class="info-container ">
             <div class="map" id="map_big">map</div>
             <div class="big-info">
                 <div class="info-content">
-                    <i title="no location available."class="icon-warning-sign icon-location-warning hidden"></i>
+                    <i title="no location available." class="icon-warning-sign icon-location-warning hidden"></i>
                     <div class="info-title">
                     Blue Hills Reservation
                     
@@ -37,35 +38,37 @@
                         <a href="">Tony Cannistra</a>
                     </div>
 
+                    <div class="scroller">
+                        <blockquote class="info-description">
+                            This is a very lengthy description about this trip which should be pretty cool! 
+                        </blockquote>
 
-                    <blockquote class="info-description">
-                        This is a very lengthy description about this trip which should be pretty cool! 
-                    </blockquote>
-
-                    <div class="pure-g-r" style="width: 70%; margin: 0 auto">
-                        <div class="pure-u-1-6">
-                        <i class="icon-exclamation-sign icon-2x"></i>
-                        </div>
-                        <div class="pure-u-5-6">
-                            <div class='info-gear'>
-                               You'll Need: shoes, socks, boots, other things, backpack, lunch
-
+                        <div class="pure-g-r" style="width: 70%; margin: 0 auto">
+                            <div class="pure-u-1-6">
+                            <i class="icon-exclamation-sign icon-2x"></i>
                             </div>
-                        </div>
-                        <div class="pure-u-1-6">
-                        <i class="icon-exclamation-sign icon-2x"></i>
-                        </div>
-                        <div class="pure-u-5-6">
-                            <div class='info-exp'>
-                               Experience: none
+                            <div class="pure-u-5-6">
+                                <div class='info-gear'>
+                                   You'll Need: shoes, socks, boots, other things, backpack, lunch
 
+                                </div>
                             </div>
-                        </div>
+                            <div class="pure-u-1-6">
+                            <i class="icon-exclamation-sign icon-2x"></i>
+                            </div>
+                            <div class="pure-u-5-6">
+                                <div class='info-exp'>
+                                   Experience: none
 
-                    </div> 
+                                </div>
+                            </div>
+
+                        </div> 
+                    </div>
                     <div class="info-weather">
                         <canvas id="weathericon" width="64" height="64"> </canvas>
                         <div class="wx-summary">
+                            <div style="font-size: 20px">trip weather</div>
                              <div class="wx-temps">
                             hi: 23.4F, lo: 0.2F
                             </div>
