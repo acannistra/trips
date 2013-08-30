@@ -6,7 +6,21 @@ var bounds_ll = new google.maps.LatLng(40.797177,-75.06958);
 var bounds_ur = new google.maps.LatLng(46.815099,-68.334961);
 var geocodeBounds    = new google.maps.LatLngBounds(bounds_ll, bounds_ur);
 var geocoder = new google.maps.Geocoder();
-var weatherpath = "api/weather/"
+var weatherpath = "api/weather/";
+var skycons = new Skycons();
+var icons = {
+  "clear-day": Skycons.CLEAR_DAY,
+  "clear-night": Skycons.CLEAR_NIGHT,
+  "partly-cloudy-day": Skycons.PARTLY_CLOUDY_DAY,
+  "partly-cloudy-night": Skycons.PARTLY_CLOUDY_NIGHT,
+  "cloudy": Skycons.CLOUDY,
+  "rain": Skycons.RAIN,
+  "sleet": Skycons.SLEET,
+  "snow": Skycons.SNOW,
+  "wind": Skycons.WIND,
+  "fog": Skycons.FOG
+}
+
 
 var typeColors = {};
 var typeCounts = {};  
@@ -127,8 +141,8 @@ function loadTrips(trips){
         'destination' : trips[i].destination,
         'description' : trips[i].description,
         'id'   : (trips[i].leaderUsername+"-"+trips[i].departDate.split(" ", 1)).replace(".", "_"),
-        'departDate' : new Date(trips[i].departDate).toDateString(),
-        'returnDate' : new Date(trips[i].returnDate).toDateString(),
+        'departDate' : new Date(trips[i].departDate.replace(/-/g, "/")).toDateString(),
+        'returnDate' : new Date(trips[i].returnDate.replace(/-/g, "/")).toDateString(),
         'category': trips[i].category.toLowerCase(),
         'gear': trips[i].gear,
         'leaderEmail' : trips[i].leaderEmail,
@@ -156,6 +170,7 @@ function loadTrips(trips){
 }
 
 function tripClick (){
+  skycons.remove('weathericon');
   tripData = $(this).find('.box').data('data');
   borderColor = $(this).find('.box').css('background-color')
 
@@ -169,6 +184,7 @@ function tripClick (){
   if(!$(this).find('.box').data('marker')){
     addMarker(tripData);
   }
+  
 
 }
 
@@ -209,9 +225,18 @@ function addMarker(tripdata) {
   geocoder.geocode( { 'address': address, 'bounds': geocodeBounds}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
         $(".icon-location-warning").hide();
-        weather(results[0].geometry.location.lat(), results[0].geometry.location.lng(), Math.round(new Date(tripdata.departDate).getTime() / 1000) , function(d, e){
-          $("#"+tripdata.id+"_box").data('weather', d.daily.data[0]);
-        })
+        if(!$(this).find('.box').data('weather')){
+          weather(results[0].geometry.location.lat(), results[0].geometry.location.lng(), Math.round(new Date(tripdata.departDate).getTime() / 1000) , function(d, e){
+
+            $("#"+tripdata.id+"_box").data('weather', d.daily.data[0]);
+            wx = $("#"+tripdata.id+"_box").data('weather');
+            $('.info-weather').find('.wx-temps').html('high: '+wx.temperatureMax+ 'F, low: '+wx.temperatureMin+'F');
+            $('.info-weather').find('.wx-text').html(wx.summary);
+            alert(wx.icon)
+            skycons.add('weathericon', icons[wx.icon]);
+            skycons.play();
+          });
+        }
         var marker_tmp = new google.maps.Marker({
           position: results[0].geometry.location,
           map: map,
@@ -277,6 +302,6 @@ function initBreakdown(types){
 }
 
 function weather(lat, lng, time, callback){
-  alert(lat + '_' + lng);
   $.getJSON(weatherpath+lat+'/'+lng+'/'+time, callback);
+
 }

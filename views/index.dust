@@ -65,6 +65,15 @@
                     </div> 
                     <div class="info-weather">
                         <canvas id="weathericon" width="64" height="64"> </canvas>
+                        <div class="wx-summary">
+                             <div class="wx-temps">
+                            hi: 23.4F, lo: 0.2F
+                            </div>
+                            <div class="wx-text">
+                            Mostly Rainy Throughout the Day
+                            </div>
+                        </div>
+                        
                     </div>
 
                     <!-- <a class="pure-button pure-button-primary info-button" style="bottom: 60px"href="#">e-mail: tony.cannistra@gmail.com</a>

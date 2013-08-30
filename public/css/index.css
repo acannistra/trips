@@ -89,6 +89,22 @@ display:inline;
 
 }
 
+.info-weather{
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+.wx-temps{
+	display: inline-block;
+}
+
+.wx-summary{
+	top: 25px;
+	position: absolute;
+	display: inline-block;
+	margin-left: 5px;
+}
+
 .icon-location-warning{
 	position: absolute;
 	bottom: 10px;
