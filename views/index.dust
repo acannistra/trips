@@ -20,11 +20,31 @@
     </head>
     <body>
 
+
 		<div class="info-container ">
             <div class="map" id="map_big">map</div>
-            <div class="big-info">
-                <div class="info-content">
-                    <i title="no location available." class="icon-warning-sign icon-location-warning hidden"></i>
+
+
+            <div class="big-info ">
+
+                <div class="info-content" id="welcome-info">
+                    <div style="font-size: 60px; text-align: center">Trips!</div>
+                    <p>Click any of the boxes to the left to get all the information about a particular trip, including location, leader, description, gear, even the weather forecast.</p>
+                    <p>
+                    Not enough trips? <a target="_blank" href="http://www.tuftsmountainclub.org/trips-2">Lead one Today!</a>
+                    </p>
+                    <p>
+                    Questions? Comments? Did you <small>(gasp)</small> find a bug? <a target="_blank" href="mailto:tony.cannistra@gmail.com">E-mail me.</a>
+                    </p>
+
+                    <p style="font-size: 15px; position: absolute; bottom:0; left:0; right:0; text-align: center">Made with TMC ♥ by <a target="_blank" href="http://www.anthonycannistra.com">Tony Cannistra</a>. Go Outside.</p>
+
+                    <p>BTW! This code is <a target="_blank" href="http://github.com/acannistra/trips"> open source.</a></p>
+
+
+                </div>
+                <div class="info-content hidden" id="main-info">
+                    <i title="no location available." class="icon-warning-sign icon-location-warning hidden"><span style="font-size: 10px">  no location available</span></i>
                     <div class="info-title">
                     Blue Hills Reservation
                     

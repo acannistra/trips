@@ -27,7 +27,7 @@ display:inline;
 }
 
 .hidden{
-	display:none;
+	display: none;
 }
 
 
@@ -88,6 +88,10 @@ display:inline;
 	font-size: 125%;
 
 }
+
+.pure-u-1-4{
+	display: inline-block;
+}
 .scroller{
 	position: absolute;
 	height: 40%;
@@ -95,7 +99,19 @@ display:inline;
 	left: 0;
 	overflow-x: hidden;
 	overflow-y: auto;
+
 }
+
+#welcome-info{
+	padding-left: 10%;
+	padding-right: 10%;	
+	font-family: 'Crimson Text' serif;
+}
+#welcome-info p{
+	font-size: 20px;
+	margin-top: 10px;
+}
+
 .info-weather{
 	position: absolute;
 	bottom: 0;

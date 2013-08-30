@@ -23,6 +23,13 @@ var icons = {
 
 
 
+var typeHidden = { 
+                   hiking: false,
+                   climbing: false,
+                   general: false,
+                   aqua: false 
+                 };
+
 
 var typeColors = {};
 var typeCounts = {};  
@@ -73,7 +80,7 @@ var tripBox = '<div class="pure-u-1-4" >' +
                 '</div>'+
               '</div>';
 
-var leadTrip = '<div class="pure-u-1-4">'+
+var leadTrip = '<div class="pure-u-1-4" id="lead_trips">'+
                         '<div class="box" id="no_trips" style="background-color: rgba(204, 216, 193, 0.54)">'+
                             '<div class="bigtext">'+
                                 'No more trips. Lead one today!'+
@@ -172,6 +179,9 @@ function loadTrips(trips){
 }
 
 function tripClick (){
+  $('#welcome-info').hide();
+  $('#main-info').removeClass('hidden');
+  map.clearOverlays();
   skycons.remove('weathericon');
   tripData = $(this).find('.box').data('data');
   borderColor = $(this).find('.box').css('background-color')
@@ -186,10 +196,17 @@ function tripClick (){
   if(!$(this).find('.box').data('marker')){
     addMarker(tripData);
   }
-
-  
-
-  
+  else{
+    showMarker(tripData);
+    wx = $(this).find('.box').data('weather')
+    if(wx){
+      $('.info-weather').find('.wx-temps').html('high: '+wx.temperatureMax+ '&#176;F, low: '+wx.temperatureMin+'&#176;F');
+      $('.info-weather').find('.wx-text').html(wx.summary);
+      skycons.add('weathericon', icons[wx.icon]);
+      skycons.play();
+      $('.info-weather').show();
+    }
+  }
 
 }
 
@@ -223,19 +240,15 @@ function map_init() {
   });
 
   google.maps.Map.prototype.clearOverlays = function() {
-  for (var i = 0; i < map_markers.length; i++ ) {
-    map_markers[i].setMap(null);
+    for (var i = 0; i < map_markers.length; i++ ) {
+      map_markers[i].setMap(null);
+    }
   }
 }
-}
 
-function clearAllMarkers(){
-
-}
 
 
 function addMarker(tripdata) {
-  map.clearOverlays();
   console.log(tripdata);
   address = tripdata.title;
   geocoder.geocode( { 'address': address, 'bounds': geocodeBounds}, function(results, status) {
@@ -255,6 +268,7 @@ function addMarker(tripdata) {
         }
         var marker_tmp = new google.maps.Marker({
           position: results[0].geometry.location,
+          id: tripdata.id,
           map: map,
           title: tripdata.title,
           icon: 'img/ico/'+tripdata.category+'.png',
@@ -262,29 +276,49 @@ function addMarker(tripdata) {
           center: results[0].geometry.location
         })
 
-        if(results[0].geometry.location.location_type === 'APPROXIMATE'){
-          $("#"+tripdata.id+"_box").data('approximate', true)
-          $
+        if(results[0].geometry.location_type === google.maps.GeocoderLocationType.APPROXIMATE){
+          $('.icon-location-warning').find('span').html('  location approximate');
+          $('.icon-location-warning').show();
         }
         map_markers.push(marker_tmp);
 
-        map.setCenter(marker_tmp.getPosition());
+        map.panTo(marker_tmp.getPosition());
 
         $("#"+tripdata.id+"_box").data('marker', true)
         $("#"+tripdata.id+"_box").data('position', results[0].geometry.location)
         google.maps.event.addListener(marker_tmp, 'click', function(){ 
-          map.setCenter(marker_tmp.getPosition());
+          map.panTo(marker_tmp.getPosition());
           tripClick.call($("#"+this.dom+"_box").parent())
         });
         
     } else {
-      $('.icon-location-warning').show();
+      $('.icon-location-warning').find('span').html('  location not available');
+      $('.icon-location-warming').show();
       $('.info-weather').hide();
     }
   });
 
 
   
+}
+
+function hideExcept(type){
+  showAll();
+  $('.box').not('#no_trips').not('.'+type+'_color').parent().hide();
+  
+}
+
+function showAll(){
+  $('.box').parent().show();
+}
+
+function showMarker(tripdata){
+  for (var i = map_markers.length - 1; i >= 0; i--) {
+    if (map_markers[i].id == tripdata.id){
+      map_markers[i].setMap(map);
+      map.panTo(map_markers[i].getPosition());
+    }
+  };
 }
 
 function mapify(tripBox, tripData){
@@ -328,6 +362,11 @@ function initBreakdown(types){
     var elem = $(document.createElement('div')).addClass("bar-elem").attr('id', type.name+"_bar").css({'width': ((1/numItems)*100)+'%'}).addClass(type.name+"_color").append(title)
     breakdown.append(elem);
     console.log(elem);
+    elem.on('click', function(){
+      if(!somethingHidden){
+        hideExcept('type');
+      }
+    })
   };
 }
 
