@@ -8,5 +8,5 @@
 
           ga('create', 'UA-43669264-1', 'anthonycannistra.com');
           ga('send', 'pageview');
-
+          alert('hi!')
         </script>
