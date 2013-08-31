@@ -264,7 +264,7 @@ function addMarker(tripdata) {
           position: results[0].geometry.location,
           id: tripdata.id,
           map: map,
-          title: tripdata.title,
+          title: tripdata.title + " – click for directions"
           icon: 'img/ico/'+tripdata.category+'.png',
           dom: tripdata.id,
           center: results[0].geometry.location
