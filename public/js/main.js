@@ -284,7 +284,7 @@ function addMarker(tripdata) {
           map.panTo(marker_tmp.getPosition());
           tripClick.call($("#"+this.dom+"_box").parent())
           if(window.confirm("NOTE: Locations are approximate, so are the driving directions you're about to receive. The Tufts Mountain Club is not responsible for any inaccuracies in these directions.")){
-            url = "http://maps.google.com/maps?saddr=Tufts University@42.406157,-71.120381&daddr="+tripdata.title+"@"+marker_tmp.getPosition();
+            url = "http://maps.google.com/maps?saddr=Tufts University, Medford, MA&daddr="+marker_tmp.getPosition();
             window.open(url, '_blank');
           }
 
