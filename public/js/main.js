@@ -22,14 +22,8 @@ var icons = {
 }
 
 
-
-var typeHidden = { 
-                   hiking: false,
-                   climbing: false,
-                   general: false,
-                   aqua: false 
-                 };
-
+var TuftsUniversity = new google.maps.LatLng(42.406157,-71.120381);
+var typeClicked = new String("");
 
 var typeColors = {};
 var typeCounts = {};  
@@ -160,7 +154,7 @@ function loadTrips(trips){
     var new_tripBox = $(Mustache.to_html(tripBox, tripData))
     new_tripBox.find('.box').data('data', tripData);
     new_tripBox.on('click', tripClick);
-    // if (tripData.date < new Date()){
+    // if (new Date(tripData.departDate) < new Date()){
     //   new_tripBox.css({opacity: 0.5, cursor: 'default'})
     // }
 
@@ -289,11 +283,17 @@ function addMarker(tripdata) {
         google.maps.event.addListener(marker_tmp, 'click', function(){ 
           map.panTo(marker_tmp.getPosition());
           tripClick.call($("#"+this.dom+"_box").parent())
+          if(window.confirm("NOTE: Locations are approximate, so are the driving directions you're about to receive. The Tufts Mountain Club is not responsible for any inaccuracies in these directions.")){
+            url = "http://maps.google.com/maps?saddr=Tufts University@42.406157,-71.120381&daddr="+tripdata.title+"@"+marker_tmp.getPosition();
+            window.open(url, '_blank');
+          }
+
         });
         
     } else {
+      $('.icon-location-warning').removeClass('hidden');
       $('.icon-location-warning').find('span').html('  location not available');
-      $('.icon-location-warming').show();
+      $('.icon-location-warming').show();      
       $('.info-weather').hide();
     }
   });
@@ -364,19 +364,23 @@ function initBreakdown(types){
     console.log(elem);
     $('#'+type.name+"_bar").on('click', function(){
       var this_type = $(this).attr('id').split('_', 1);
-      if(!typeHidden[this_type]){
-        showOnly(this_type);
-        typeHidden[this_type] = true;
+      if(typeClicked.valueOf() === new String(this_type).valueOf()){
+        showAll();
+        typeClicked = new String("");
       }
       else{
-        typeHidden[this_type] = false;
-        showAll();
+        showOnly(this_type);
+        typeClicked = new String(this_type);
       }
     })
   };
 }
 
+function openDirections(destination){
+  url = "http://maps.google.com/maps?saddr=42.406157,-71.120381[Tufts University]&daddr="+destination
+  window.open(url, '_blank');
+}
+
 function weather(lat, lng, time, callback){
   $.getJSON(weatherpath+lat+'/'+lng+'/'+time, callback);
-
 }
