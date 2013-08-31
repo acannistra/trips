@@ -119,7 +119,7 @@ google.maps.event.addDomListener(window, 'load', map_init);
 $(document).ready(function(){
   var tripsURL = 'http://www.tuftsmountainclub.org/api/trips.php?action=list&days=180';
   $.getJSON(tripsURL, function(data){
-    trips_ref = data.sort(function(a,b){ return (new Date(a.departDate)) >= (new Date(b.departDate))});
+    trips_ref = data;
     page_init();
    });
 
@@ -134,22 +134,24 @@ function page_init(){
 
 function loadTrips(trips){
 
-  for (var i = trips.length - 1; i >= 0; i--) {
-    if(!trips[i]){continue;}
-    var category = trips[i].category.toLowerCase()
+  trips.forEach(function(trip) {
+    if(!trip){return;}
+    var category = trip.category.toLowerCase()
     var tripData = 
       {
-        'title': trips[i].destination,
-        'leader': trips[i].leaderName,
-        'destination' : trips[i].destination,
-        'description' : trips[i].description,
-        'id'   : (trips[i].leaderUsername+"-"+trips[i].departDate.split(" ", 1)).replace(".", "_"),
-        'departDate' : new Date(trips[i].departDate.replace(/-/g, "/")).toDateString(),
-        'returnDate' : new Date(trips[i].returnDate.replace(/-/g, "/")).toDateString(),
-        'category': trips[i].category.toLowerCase(),
-        'gear': trips[i].gear,
-        'leaderEmail' : trips[i].leaderEmail,
-        'level' : trips[i].level
+        'title': trip.destination,
+        'leader': trip.leaderName,
+        'destination' : trip.destination,
+        'description' : trip.description,
+        'id'   : (trip.leaderUsername+"-"+trip.departDate.split(" ", 1)).replace(".", "_"),
+        'departDate' : new Date(trip.departDate.replace(/-/g, "/")).toDateString(),
+        'departDateObj': new Date(trip.departDate.replace(/-/g, "/")),
+        'returnDate' : new Date(trip.returnDate.replace(/-/g, "/")).toDateString(),
+        'returnDateObj': new Date(trip.returnDate.replace(/-/g, "/")),
+        'category': trip.category.toLowerCase(),
+        'gear': trip.gear,
+        'leaderEmail' : trip.leaderEmail,
+        'level' : trip.level
       };
     var new_tripBox = $(Mustache.to_html(tripBox, tripData))
     new_tripBox.find('.box').data('data', tripData);
@@ -159,7 +161,7 @@ function loadTrips(trips){
     // }
 
 
-    $("#trips_grid").append(new_tripBox);
+    $("#trips_grid").prepend(new_tripBox);
     new_tripBox.show('slow');
     $.each(types, function(i,v){
       if(v.name === category){
@@ -168,7 +170,7 @@ function loadTrips(trips){
     })
     // $.post('api/trips/add', tripData, function(d) {if(d != "OK"){console.log('post err');}});
     mapify(new_tripBox, tripData);
-  };
+  });
   $("#trips_grid").append($('<div/>').html(leadTrip).contents());
 }
 
@@ -200,6 +202,10 @@ function tripClick (){
       skycons.play();
       $('.info-weather').show();
     }
+  }
+  if($(this).find('.box').data('approx')){
+    $('.icon-location-warning').find('span').html('  location approximate')
+    $('.icon-location-warning').show();
   }
 
 }
@@ -273,6 +279,8 @@ function addMarker(tripdata) {
         if(results[0].geometry.location_type === google.maps.GeocoderLocationType.APPROXIMATE){
           $('.icon-location-warning').find('span').html('  location approximate');
           $('.icon-location-warning').show();
+          $("#"+tripdata.id+"_box").data('approx', true);
+
         }
         map_markers.push(marker_tmp);
 
