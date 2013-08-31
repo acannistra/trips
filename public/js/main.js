@@ -302,7 +302,7 @@ function addMarker(tripdata) {
   
 }
 
-function hideExcept(type){
+function showOnly(type){
   showAll();
   $('.box').not('#no_trips').not('.'+type+'_color').parent().hide();
   
@@ -362,9 +362,15 @@ function initBreakdown(types){
     var elem = $(document.createElement('div')).addClass("bar-elem").attr('id', type.name+"_bar").css({'width': ((1/numItems)*100)+'%'}).addClass(type.name+"_color").append(title)
     breakdown.append(elem);
     console.log(elem);
-    elem.on('click', function(){
-      if(!somethingHidden){
-        hideExcept('type');
+    $('#'+type.name+"_bar").on('click', function(){
+      var this_type = $(this).attr('id').split('_', 1);
+      if(!typeHidden[this_type]){
+        showOnly(this_type);
+        typeHidden[this_type] = true;
+      }
+      else{
+        typeHidden[this_type] = false;
+        showAll();
       }
     })
   };
