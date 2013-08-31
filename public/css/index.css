@@ -5,7 +5,13 @@ html, body{
 	padding: 0px;
 	transition:all .2s linear; -o-transition:all .2s linear; -moz-transition:all .2s linear; -webkit-transition:all .2s linear;
 	font-family: 'Lusitana', serif;
-	min-width: 950px;
+	-webkit-overflow-scrolling: touch;
+
+}
+
+body{
+	overflow-x: hidden;
+	min-width: 950px,
 }
 
 blockquote {
@@ -35,7 +41,7 @@ display:inline;
 .header{
 	position: absolute;
 	top: 0;
-	width: 50% !important;	
+	width: 50% ;	
 	right: 0;
 	left: 0;
 
@@ -56,7 +62,7 @@ display:inline;
 
 .info-content{
 	border: 10px solid;
-
+	overflow-y: auto;
 	position:absolute;
 	right: 2px;
 	left: 2px;
@@ -68,6 +74,7 @@ display:inline;
 .info-title{
 	font-size: 50px;
 	text-align: center;
+	line-height: 1em;
 }
 
 .info-leader{
@@ -94,12 +101,9 @@ display:inline;
 	display: inline-block;
 }
 .scroller{
-	position: absolute;
-	height: 40%;
+	bottom: 0;
 	right: 0;
 	left: 0;
-	overflow-x: hidden;
-	overflow-y: auto;
 
 }
 
@@ -114,8 +118,7 @@ display:inline;
 }
 
 .info-weather{
-	position: absolute;
-	bottom: 0;
+	
 	width: 100%;
 }
 .wx-temps{
@@ -178,7 +181,7 @@ display:inline;
 
 .content{
 	position: absolute;
-	width: 65% !important;
+	width: 65%;
 	top: 0;
 	bottom: 0;
 	left: 0px;
@@ -216,9 +219,8 @@ display:inline;
 
 }
 .scrolls { 
-    
+
     height: 255px;
-    white-space: nowrap;
 } 
 
 
@@ -362,17 +364,40 @@ td {
 	padding: 3px;
 }
 
+#slideup-info {
+	bottom: 0px ;
+	display: none ;
+	position: fixed ;
+	width: 100% ;
+	height: 100%;
+}
+ 
+#slideup-content {
+	border: 1px solid #666666 ;
+	border-bottom-width: 0px ;
+	padding: 20px 20px 100px 20px ;
+}
+
 @media(max-width: 1500px){
-	.info-title{
-		font-size: 35px;
-	}
-	.info-dates{
-		font-size: 13px;
-	}
-	.info-leader{
-		font-size: 15px;
-	}
+
 	blockquote{
 		margin-top: 0px;
 	}
+}
+/*iphone */
+@media (max-width: 480px) {
+	.info-container{
+		display:none;
+		width: 0;
+	}
+	.content{
+		width: 100%;
+	}
+	.bottom-img{
+		display:none;
+	}
+	.bar{
 
+	}
+
+}

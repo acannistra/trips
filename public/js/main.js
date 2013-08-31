@@ -21,9 +21,12 @@ var icons = {
   "fog": Skycons.FOG
 }
 
-
+var MIN_WIDTH = 480;
+var mobile = false;
 var TuftsUniversity = new google.maps.LatLng(42.406157,-71.120381);
 var typeClicked = new String("");
+
+var clickEvent = 'click'; /* 'touchstart for mobile' */
 
 var typeColors = {};
 var typeCounts = {};  
@@ -97,7 +100,9 @@ var infoBox_template = '<div class="infobox">' +
                   '</div>';
 
 
-
+function slideAway(){
+  $('#slideup-info').slideUp();
+}
 
 var infoBox_options = {
   disableAutoPan: false
@@ -115,22 +120,68 @@ var infoBox_options = {
 
 var map_markers = [];
 
-google.maps.event.addDomListener(window, 'load', map_init);
+/* for iPhone scrollbar */
+
+
 $(document).ready(function(){
+  window.scrollTo(0,0);
   var tripsURL = 'http://www.tuftsmountainclub.org/api/trips.php?action=list&days=180';
   $.getJSON(tripsURL, function(data){
     trips_ref = data;
     page_init();
    });
+});
 
+$(window).on('resize', function(){
+  width = $(window).width();
+  if(window.width <= MIN_WIDTH){
+    renderMobile();
+  }
+  else{
+    renderDesktop();
+    if(!map){
+      map_init();
+    }
+  }
 });
 
 function page_init(){
   initBreakdown(types);
   loadTrips(trips_ref);
   updateBreakdown(types);
+  if($(window).width() <= MIN_WIDTH){
+
+    renderMobile();
+  }
+  else{
+    map_init();
+    mobile = false;
+  }
+}
+
+function renderMobile(){
+  mobile = true;
+  $('.pure-u-1-4').removeClass('pure-u-1-4').addClass('pure-u-1-2')
+  $('.bar-elem').each(function(){
+    type = $(this).attr('id').split('_', 1)
+    $(this).find('.bar-elem-title').html('<img src="img/ico/'+type+'.png"></img>')
+  });
+
 
 }
+function renderDesktop(){
+  mobile = false;
+  $('.pure-u-1-2').removeClass('pure-u-1-2').addClass('pure-u-1-4')
+  $('.bar-elem').each(function(){
+    type = $(this).attr('id').split('_', 1)
+    num = $(this).find('.bar-elem-title').data('number');
+
+    if(num){
+      $(this).find('.bar-elem-title').html(type+'('+num+')');
+    }
+  })
+}
+
 
 function loadTrips(trips){
 
@@ -155,7 +206,7 @@ function loadTrips(trips){
       };
     var new_tripBox = $(Mustache.to_html(tripBox, tripData))
     new_tripBox.find('.box').data('data', tripData);
-    new_tripBox.on('click', tripClick);
+    new_tripBox.on(clickEvent, tripClick);
     // if (new Date(tripData.departDate) < new Date()){
     //   new_tripBox.css({opacity: 0.5, cursor: 'default'})
     // }
@@ -177,23 +228,24 @@ function loadTrips(trips){
 function tripClick (){
   $('#welcome-info').hide();
   $('#main-info').removeClass('hidden');
-  map.clearOverlays();
+  if(map) map.clearOverlays();
   skycons.remove('weathericon');
   tripData = $(this).find('.box').data('data');
   borderColor = $(this).find('.box').css('background-color')
 
   $(".info-content").css({border: '10px solid '+borderColor});
   $('.info-title').html(tripData.title);
-  $('.info-dates').html(tripData.departDate + " - " + tripData.returnDate)
+  $('.info-dates').html(tripData.departDate + " - " + tripData.returnDate);
   $('.info-leader').html('<a href="mailto:'+tripData.leaderEmail+'">'+tripData.leader+'</a>');
   $('.info-description').html(tripData.description);
-  $('.info-gear').html("<u>You'll Need</u>: "+tripData.gear)
-  $('.info-exp').html("<u>Experience</u>: "+tripData.level)
-  if(!$(this).find('.box').data('marker')){
+  $('.info-gear').html("<u>You'll Need</u>: "+tripData.gear);
+  $('.info-exp').html("<u>Experience</u>: "+tripData.level);
+  if(mobile){$('#slideup-info').slideDown();}
+  if(map && !$(this).find('.box').data('marker')){
     addMarker(tripData);
   }
   else{
-    showMarker(tripData);
+    if (map) showMarker(tripData);
     wx = $(this).find('.box').data('weather')
     if(wx){
       $('.info-weather').find('.wx-temps').html('high: '+wx.temperatureMax+ '&#176;F, low: '+wx.temperatureMin+'&#176;F');
@@ -288,7 +340,7 @@ function addMarker(tripdata) {
 
         $("#"+tripdata.id+"_box").data('marker', true)
         $("#"+tripdata.id+"_box").data('position', results[0].geometry.location)
-        google.maps.event.addListener(marker_tmp, 'click', function(){ 
+        google.maps.event.addListener(marker_tmp, clickEvent, function(){ 
           map.panTo(marker_tmp.getPosition());
           tripClick.call($("#"+this.dom+"_box").parent())
           if(window.confirm("NOTE: Locations are approximate, so are the driving directions you're about to receive. The Tufts Mountain Club is not responsible for any inaccuracies in these directions.")){
@@ -351,6 +403,7 @@ function updateBreakdown(types){
       $("#"+types[i].name+"_bar").hide('slow');
     }
     else{
+      $("#"+types[i].name+"_bar .bar-elem-title").data('number', types[i].number)
       $("#"+types[i].name+"_bar .bar-elem-title").append(" ("+types[i].number+")");
       $("#"+types[i].name+"_bar").animate({"width" : width+"%"}, 'slow');
     };
@@ -370,7 +423,7 @@ function initBreakdown(types){
     var elem = $(document.createElement('div')).addClass("bar-elem").attr('id', type.name+"_bar").css({'width': ((1/numItems)*100)+'%'}).addClass(type.name+"_color").append(title)
     breakdown.append(elem);
     console.log(elem);
-    $('#'+type.name+"_bar").on('click', function(){
+    $('#'+type.name+"_bar").on(clickEvent, function(){
       var this_type = $(this).attr('id').split('_', 1);
       if(typeClicked.valueOf() === new String(this_type).valueOf()){
         showAll();
@@ -382,6 +435,8 @@ function initBreakdown(types){
       }
     })
   };
+
+
 }
 
 function openDirections(destination){
