@@ -9,8 +9,9 @@ I awoke the morning of August 24, 2013 with a strong desire to make a cool inter
 * Intuitive and pleasant UI to visualize trips.
 * Color-coded trip types
 * Mapping trip locations
-* Trip location weather (todo)
+* Trip location weather 
 * Trip information display
+* Trip Driving Directions 
 
 ## Code I Didn't Write
 * [forecast.io](http://developer.forecast.io)'s superb API
