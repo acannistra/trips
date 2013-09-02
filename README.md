@@ -19,6 +19,7 @@ I awoke the morning of August 24, 2013 with a strong desire to make a cool inter
 * [rschlaikjer's](https://github.com/rschlaikjer) great work on the TMC trips API.
 * The sweet [Skycons.js](https://github.com/darkskyapp/skycons) weather icons package
 * Nicolas Mollet's great [Google Maps icon suite](http://mapicons.nicolasmollet.com).
+* [Mustache.js](https://github.com/janl/mustache.js/) templating
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/acannistra/trips/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
