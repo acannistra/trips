@@ -187,22 +187,22 @@ function loadTrips(trips){
 
   trips.forEach(function(trip) {
     if(!trip){return;}
-    var category = trip.category.toLowerCase()
+    var category = trip.trip_type.toLowerCase()
     var tripData = 
       {
         'title': trip.destination,
-        'leader': trip.leaderName,
+        'leader': trip.leader_name,
         'destination' : trip.destination,
         'description' : trip.description,
-        'id'   : (trip.leaderUsername+"-"+trip.departDate.split(" ", 1)).replace(".", "_"),
-        'departDate' : new Date(trip.departDate.replace(/-/g, "/")).toDateString(),
-        'departDateObj': new Date(trip.departDate.replace(/-/g, "/")),
-        'returnDate' : new Date(trip.returnDate.replace(/-/g, "/")).toDateString(),
-        'returnDateObj': new Date(trip.returnDate.replace(/-/g, "/")),
-        'category': trip.category.toLowerCase(),
-        'gear': trip.gear,
-        'leaderEmail' : trip.leaderEmail,
-        'level' : trip.level
+        'id'   : trip.trip_id,
+        'departDate' : new Date(trip.depart_date.replace(/-/g, "/")).toDateString(),
+        'departDateObj': new Date(trip.depart_date.replace(/-/g, "/")),
+        'returnDate' : new Date(trip.return_date.replace(/-/g, "/")).toDateString(),
+        'returnDateObj': new Date(trip.return_date.replace(/-/g, "/")),
+        'category': trip.trip_type.toLowerCase(),
+        'gear': trip.gear_needed,
+        'leaderEmail' : trip.leader_email,
+        'level' : trip.experience_needed
       };
     var new_tripBox = $(Mustache.to_html(tripBox, tripData))
     new_tripBox.find('.box').data('data', tripData);
@@ -241,17 +241,18 @@ function tripClick (){
   $('.info-gear').html("<u>You'll Need</u>: "+tripData.gear);
   $('.info-exp').html("<u>Experience</u>: "+tripData.level);
   if(mobile){$('#slideup-info').slideDown();}
-  if(map && !$(this).find('.box').data('marker')){
-    addMarker(tripData);
+  if(!$(this).find('.box').data('marker')){
+    if(map) addMarker(tripData);
   }
   else{
     if (map) showMarker(tripData);
-    wx = $(this).find('.box').data('weather')
+    wx = $(this).find('.box').data('weather');
     if(wx){
       $('.info-weather').find('.wx-temps').html('high: '+wx.temperatureMax+ '&#176;F, low: '+wx.temperatureMin+'&#176;F');
       $('.info-weather').find('.wx-text').html(wx.summary);
-      skycons.add('weathericon', icons[wx.icon]);
-      skycons.play();
+      // skycons.add('weathericon', icons[wx.icon]);
+      
+      // skycons.play();
       $('.info-weather').show();
     }
   }
@@ -259,6 +260,7 @@ function tripClick (){
     $('.icon-location-warning').find('span').html('  location approximate')
     $('.icon-location-warning').show();
   }
+
 
 }
 
@@ -308,12 +310,12 @@ function addMarker(tripdata) {
         $(".icon-location-warning").hide();
         if(!$(this).find('.box').data('weather')){
           weather(results[0].geometry.location.lat(), results[0].geometry.location.lng(), Math.round(new Date(tripdata.departDate).getTime() / 1000) , function(d, e){
-
             $("#"+tripdata.id+"_box").data('weather', d.daily.data[0]);
             wx = $("#"+tripdata.id+"_box").data('weather');
             $('.info-weather').find('.wx-temps').html('high: '+wx.temperatureMax+ '&#176;F, low: '+wx.temperatureMin+'&#176;F');
             $('.info-weather').find('.wx-text').html(wx.summary);
             skycons.add('weathericon', icons[wx.icon]);
+
             skycons.play();
             $('.info-weather').show();
           });

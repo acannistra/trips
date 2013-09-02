@@ -90,14 +90,14 @@
 
                         </div> 
                         <div class="info-weather">
-                            <canvas id="weathericon" width="64" height="64"> </canvas>
+                            <!-- <canvas id="weathericon-small" width="64" height="64"> </canvas> -->
                             <div class="wx-summary">
                                 <div style="font-size: 20px">trip weather</div>
                                  <div class="wx-temps">
-                                hi: 23.4F, lo: 0.2F
+                                loading...
                                 </div>
                                 <div class="wx-text">
-                                Mostly Rainy Throughout the Day
+                                loading...
                                 </div>
                             </div>
                             
@@ -179,14 +179,14 @@
 
                     </div> 
                     <div class="info-weather">
-                        <canvas id="weathericon" width="64" height="64"> </canvas>
+                        <canvas id="weathericonSmall" width="50" height="50"> </canvas>
                         <div class="wx-summary">
                             <div style="font-size: 20px">trip weather</div>
                              <div class="wx-temps">
-                            hi: 23.4F, lo: 0.2F
+                            loading...
                             </div>
                             <div class="wx-text">
-                            Mostly Rainy Throughout the Day
+                            loading...  
                             </div>
                         </div>
                         
