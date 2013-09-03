@@ -207,9 +207,9 @@ function loadTrips(trips){
     var new_tripBox = $(Mustache.to_html(tripBox, tripData))
     new_tripBox.find('.box').data('data', tripData);
     new_tripBox.on(clickEvent, tripClick);
-    // if (new Date(tripData.departDate) < new Date()){
-    //   new_tripBox.css({opacity: 0.5, cursor: 'default'})
-    // }
+    if (new Date(tripData.departDate) < new Date()){
+      new_tripBox.css({opacity: 0.5})
+    }
 
 
     $("#trips_grid").prepend(new_tripBox);
