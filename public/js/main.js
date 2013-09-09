@@ -49,6 +49,11 @@ var types      = [{
                     name: 'aqua',
                     color: '#87CEEB',
                     number: 0
+                  },
+                  {
+                    name: 'ride',
+                    color: '#A99AD0',
+                    number: 0
                   }];
 
 var trips_ref  = {};
