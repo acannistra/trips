@@ -25,6 +25,10 @@
     "xml2js": "~0.2.8",
     "socket.io": "~0.9.16",
     "interface-addresses": "0.0.5",
-    "eyespect": "~0.1.10"
+    "eyespect": "~0.1.10",
+    "grunt-cli": "0.1.9",
+    "redis": "0.8.4",
+    "forecast.io": "0.0.4",
+    "googlemaps", "0.1.8"
   }
 }
