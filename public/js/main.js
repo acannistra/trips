@@ -52,8 +52,18 @@ var types      = [{
                   },
                   {
                     name: 'ride',
-                    color: '#A99AD0',
+                    color: '#E9E7DD',
                     number: 0
+                  },
+                  {
+                  	name: 'skills',
+                  	color: '#EB7F5D',
+                  	number: 0
+                  },
+                  {
+                  	name: 'running',
+                  	color: "#B8E772",
+                  	number: 0
                   }];
 
 var trips_ref  = {};
