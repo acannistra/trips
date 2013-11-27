@@ -15,17 +15,17 @@ var dust = require('consolidate').dust;
 var app = express();
 
 // Configure environments
-app.engine('dust' , dust);
-app.set('port', process.env.PORT || 80);
-app.set('views', __dirname + '/views');
-app.set('view engine', 'dust');
-app.use(express.favicon('public/favicon.ico'));
-app.use(express.logger('dev'));
-app.use(express.bodyParser());
-app.use(express.methodOverride());
-app.use(app.router);
-app.use(express.static(path.join(__dirname, '/public')));
-
+//app.engine('dust' , dust);
+//app.set('port', process.env.PORT || 80);
+//app.set('views', __dirname + '/views');
+//app.set('view engine', 'dust');
+//app.use(express.favicon('public/favicon.ico'));
+//app.use(express.logger('dev'));
+//app.use(express.bodyParser());
+//app.use(express.methodOverride());
+//app.use(app.router);
+//app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.static('/static'));
 
 app.get('/', routes.index);
 app.get('/api/weather/:lat/:lng/:at', api.weather)
