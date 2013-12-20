@@ -16,8 +16,8 @@ var app = express();
 
 // Configure environments
 //app.engine('dust' , dust);
-//app.set('port', process.env.PORT || 80);
-//app.set('views', __dirname + '/views');
+app.set('port', process.env.PORT || 80);
+app.set('views', __dirname + '/views');
 //app.set('view engine', 'dust');
 //app.use(express.favicon('public/favicon.ico'));
 //app.use(express.logger('dev'));
